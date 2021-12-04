@@ -9,9 +9,9 @@ $database = new Database();
 
 $db = $database->getConnection();
 
-$hospital = new Hospital($db);
+$doctors = new Doctors($db);
 
-$stmt =$hospital->read();
+$stmt =$doctors->read();
 $num = $stmt->rowCount();
 
 if ($num > 0) {
@@ -20,15 +20,15 @@ if ($num > 0) {
 	
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		extract($row);
-		$hospital_item = array(
-			"ID" => $ID,
+		$doctors_item = array(
+			"id" => $id,
 			"NAME" => $NAME,
 			"SURNAME" => $SURNAME,
 			"BIRTHDAY" => $BIRTHDAY,
 			"SALARY" => $SALARY,
 		);
 		
-		array_push($Doctors_arr['records'], $hospital_item);
+		array_push($Doctors_arr['records'], $doctors_item);
 	}
 	
 	http_response_code(200);
