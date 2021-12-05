@@ -21,10 +21,11 @@ if ($num > 0) {
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		extract($row);
 		$doctors_item = array(
-			"id" => $id,
+			"POSITION" => $POSITION,
 			"NAME" => $NAME,
 			"SURNAME" => $SURNAME,
-			"BIRTHDAY" => $BIRTHDAY,
+			"MIDDLENAME" => $MIDDLENAME,
+			"ROOMNUM" => $ROOMNUM,
 			"SALARY" => $SALARY,
 		);
 		
@@ -40,5 +41,6 @@ else {
 	
 	echo json_encode(array("message" => "Записи не найдены"), JSON_UNESCAPED_UNICODE);
 }
+
 
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 class Doctors{
 	
 	private  $conn;
@@ -75,6 +76,7 @@ class Doctors{
 		$stmt->execute();
 		
 		return $stmt;
+		
 	}
 	
 	function update() {
