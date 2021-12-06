@@ -13,7 +13,7 @@ require 'db.php';
 					{
 					$_SESSION['logged_user'] = $user;
 					echo '<div style="color:green;">Вы авторизованы<br/>
-					Можете перейти на <a href="index.php">главную</a> страницу</div><hr>';
+					Можете перейти на страницу <a href="admin.php">сотрудников</a> </div><hr>';
 					} else
 					{
 						$errors[] = 'Неверный пароль';
