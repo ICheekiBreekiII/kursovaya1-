@@ -44,4 +44,14 @@ else {
 	echo json_encode(array("message" => "Записи не найдены"), JSON_UNESCAPED_UNICODE);
 }
 
+
+{
+   header ('Location: test.html');  
+   exit();    
+}
+
 ?>
+
+
+
+

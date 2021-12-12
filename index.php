@@ -1,37 +1,125 @@
 <?php
-	require 'db1.php';
-			$data = $_POST;
-			if( isset($data['do_signup']) )
-			{
-
-				$errors = array();
-				if( trim($data['number']) == '' )
+		{
+			require 'db1.php';
+				$data = $_POST;
+				if( isset($data['do_signup']) )
 				{
-					$errors[] = 'Введите логин!'; 
+
+					$errors = array();
+					if( trim($data['number']) == '' )
+					{
+						$errors[] = 'Введите логин!'; 
+					}
+
+					if(R::count('phones', "number = ?", array($data['number'])) > 0 )
+					{
+						$errors[] = 'Пользователь с таким номером уже существует!';
+					}
+					
+					if( empty($errors) )
+					{
+						$user = R:: dispense('phones');
+						$user ->number = $data['number'];
+						
+						R::store($user);
+						echo '<div style="color: green;">Вы успешно оставили номер</div>';
+
+
+					} 
+
 				}
+		}
+		
 
-				if(R::count('phones', "number = ?", array($data['number'])) > 0 )
-				{
-					$errors[] = 'Пользователь с таким номером уже существует!';
+		{ 
+			include_once "db2.php";
+			include_once "news.php";
+
+			$database = new Database();
+
+			$db = $database->getConnection();
+
+			$news = new News($db);
+
+			$stmt =$news->read();
+			$num = $stmt->rowCount();
+
+			if ($num > 0) {
+				$News_arr = array();
+				$News_arr['records'] = array();
+				
+				while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+					extract($row);
+					$news_item = array(
+						"NEWS" => $NEWS,
+					);
+					
+					array_push($News_arr['records'], $news_item);
 				}
 				
-				if( empty($errors) )
-				{
-					$user = R:: dispense('phones');
-					$user ->number = $data['number'];
-					
-					R::store($user);
-					echo '<div style="color: green;">Вы успешно оставили номер</div>';
-
-
-				} 
-
+				http_response_code(200);
+				
+				//echo json_encode($news_arr);
+				$json_data = json_encode($News_arr);
+				file_put_contents('news.json', $json_data);
 			}
-		?> 
+			else {
+				http_response_code(404);
+				
+				echo json_encode(array("message" => "Записи не найдены"), JSON_UNESCAPED_UNICODE);
+			}
+			
+			
+		}
+		
+		{
+			
+			include_once "db2.php";
+			include_once "qa.php";
+
+			$database = new Database();
+
+			$db = $database->getConnection();
+
+			$qa = new Qa($db);
+
+			$stmt =$qa->read();
+			$num = $stmt->rowCount();
+
+			if ($num > 0) {
+				$Qa_arr = array();
+				$Qa_arr['records'] = array();
+				
+				while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+					extract($row);
+					$qa_item = array(
+						"QA" => $QA,
+					);
+					
+					array_push($Qa_arr['records'], $qa_item);
+				}
+				
+				http_response_code(200);
+				
+				//echo json_encode($news_arr);
+				$json_data = json_encode($Qa_arr);
+				file_put_contents('qa.json', $json_data);
+			}
+			else {
+				http_response_code(404);
+				
+				echo json_encode(array("message" => "Записи не найдены"), JSON_UNESCAPED_UNICODE);
+			}
+		
+		}
+?>
+		
+		
 
 <!DOCTYPE html>
 <html style="font-size: 16px;">
   <head>
+  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <meta name="keywords" content="Dental Clinic">
@@ -61,15 +149,15 @@
     <meta property="og:type" content="website">
   </head>
   <body data-home-page="main.html" data-home-page-title="main" class="u-body"><header class="u-clearfix u-header" id="sec-866e"><div class="u-clearfix u-sheet u-sheet-1">
-        <a href="https://nicepage.cc" class="u-active-none u-btn u-btn-rectangle u-button-style u-hover-none u-none u-radius-0 u-text-body-color u-btn-1"><span class="u-icon u-icon-1"><svg class="u-svg-content" viewBox="0 0 405.333 405.333" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M373.333,266.88c-25.003,0-49.493-3.904-72.704-11.563c-11.328-3.904-24.192-0.896-31.637,6.699l-46.016,34.752    c-52.8-28.181-86.592-61.952-114.389-114.368l33.813-44.928c8.512-8.512,11.563-20.971,7.915-32.64    C142.592,81.472,138.667,56.96,138.667,32c0-17.643-14.357-32-32-32H32C14.357,0,0,14.357,0,32    c0,205.845,167.488,373.333,373.333,373.333c17.643,0,32-14.357,32-32V298.88C405.333,281.237,390.976,266.88,373.333,266.88z"></path></svg><img></span>&nbsp;+1 (234) 567-8910
+        <a href="" class="u-active-none u-btn u-btn-rectangle u-button-style u-hover-none u-none u-radius-0 u-text-body-color u-btn-1"><span class="u-icon u-icon-1"><svg class="u-svg-content" viewBox="0 0 405.333 405.333" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M373.333,266.88c-25.003,0-49.493-3.904-72.704-11.563c-11.328-3.904-24.192-0.896-31.637,6.699l-46.016,34.752    c-52.8-28.181-86.592-61.952-114.389-114.368l33.813-44.928c8.512-8.512,11.563-20.971,7.915-32.64    C142.592,81.472,138.667,56.96,138.667,32c0-17.643-14.357-32-32-32H32C14.357,0,0,14.357,0,32    c0,205.845,167.488,373.333,373.333,373.333c17.643,0,32-14.357,32-32V298.88C405.333,281.237,390.976,266.88,373.333,266.88z"></path></svg><img></span>&nbsp;+1 (234) 567-8910
         </a>
         <p class="u-align-center u-text u-text-1">Регистратура:</p>
         <a href="#sec-dee3" class="u-btn u-btn-round u-button-style u-dialog-link u-hover-palette-4-base u-palette-3-base u-radius-50 u-btn-2"><span class="u-icon u-icon-2"><svg class="u-svg-content" viewBox="0 0 513.64 513.64" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M499.66,376.96l-71.68-71.68c-25.6-25.6-69.12-15.359-79.36,17.92c-7.68,23.041-33.28,35.841-56.32,30.72 c-51.2-12.8-120.32-79.36-133.12-133.12c-7.68-23.041,7.68-48.641,30.72-56.32c33.28-10.24,43.52-53.76,17.92-79.36l-71.68-71.68 c-20.48-17.92-51.2-17.92-69.12,0l-48.64,48.64c-48.64,51.2,5.12,186.88,125.44,307.2c120.32,120.32,256,176.641,307.2,125.44 l48.64-48.64C517.581,425.6,517.581,394.88,499.66,376.96z"></path></svg><img></span>&nbsp;Записаться на платный прием
         </a>
-        <a href="https://nicepage.cc" class="u-active-none u-btn u-btn-rectangle u-button-style u-hover-none u-none u-radius-0 u-text-body-color u-btn-3"><span class="u-icon u-icon-3"><svg class="u-svg-content" viewBox="0 0 405.333 405.333" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M373.333,266.88c-25.003,0-49.493-3.904-72.704-11.563c-11.328-3.904-24.192-0.896-31.637,6.699l-46.016,34.752    c-52.8-28.181-86.592-61.952-114.389-114.368l33.813-44.928c8.512-8.512,11.563-20.971,7.915-32.64    C142.592,81.472,138.667,56.96,138.667,32c0-17.643-14.357-32-32-32H32C14.357,0,0,14.357,0,32    c0,205.845,167.488,373.333,373.333,373.333c17.643,0,32-14.357,32-32V298.88C405.333,281.237,390.976,266.88,373.333,266.88z"></path></svg><img></span>&nbsp;+1 (234) 567-8910
+        <a href="" class="u-active-none u-btn u-btn-rectangle u-button-style u-hover-none u-none u-radius-0 u-text-body-color u-btn-3"><span class="u-icon u-icon-3"><svg class="u-svg-content" viewBox="0 0 405.333 405.333" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M373.333,266.88c-25.003,0-49.493-3.904-72.704-11.563c-11.328-3.904-24.192-0.896-31.637,6.699l-46.016,34.752    c-52.8-28.181-86.592-61.952-114.389-114.368l33.813-44.928c8.512-8.512,11.563-20.971,7.915-32.64    C142.592,81.472,138.667,56.96,138.667,32c0-17.643-14.357-32-32-32H32C14.357,0,0,14.357,0,32    c0,205.845,167.488,373.333,373.333,373.333c17.643,0,32-14.357,32-32V298.88C405.333,281.237,390.976,266.88,373.333,266.88z"></path></svg><img></span>&nbsp;+1 (234) 567-8910
         </a>
         <p class="u-align-center u-text u-text-2">Справочная больницы:</p>
-        <a href="https://nicepage.cc" class="u-active-none u-btn u-btn-rectangle u-button-style u-hover-none u-none u-radius-0 u-text-body-color u-btn-4"><span class="u-icon u-icon-4"><svg class="u-svg-content" viewBox="0 0 405.333 405.333" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M373.333,266.88c-25.003,0-49.493-3.904-72.704-11.563c-11.328-3.904-24.192-0.896-31.637,6.699l-46.016,34.752    c-52.8-28.181-86.592-61.952-114.389-114.368l33.813-44.928c8.512-8.512,11.563-20.971,7.915-32.64    C142.592,81.472,138.667,56.96,138.667,32c0-17.643-14.357-32-32-32H32C14.357,0,0,14.357,0,32    c0,205.845,167.488,373.333,373.333,373.333c17.643,0,32-14.357,32-32V298.88C405.333,281.237,390.976,266.88,373.333,266.88z"></path></svg><img></span>&nbsp;+1 (234) 567-8910
+        <a href="" class="u-active-none u-btn u-btn-rectangle u-button-style u-hover-none u-none u-radius-0 u-text-body-color u-btn-4"><span class="u-icon u-icon-4"><svg class="u-svg-content" viewBox="0 0 405.333 405.333" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M373.333,266.88c-25.003,0-49.493-3.904-72.704-11.563c-11.328-3.904-24.192-0.896-31.637,6.699l-46.016,34.752    c-52.8-28.181-86.592-61.952-114.389-114.368l33.813-44.928c8.512-8.512,11.563-20.971,7.915-32.64    C142.592,81.472,138.667,56.96,138.667,32c0-17.643-14.357-32-32-32H32C14.357,0,0,14.357,0,32    c0,205.845,167.488,373.333,373.333,373.333c17.643,0,32-14.357,32-32V298.88C405.333,281.237,390.976,266.88,373.333,266.88z"></path></svg><img></span>&nbsp;+1 (234) 567-8910
         </a>
         <p class="u-align-center u-text u-text-3">Отделение платных услуг:</p>
         <p class="u-align-center u-text u-text-palette-2-base u-text-4">ОБЛАСТНАЯ<br>БОЛЬНИЦА
@@ -174,13 +262,53 @@
               <div class="u-size-30">
                 <div class="u-layout-row">
                   <div class="u-container-style u-image u-layout-cell u-left-cell u-size-30 u-image-1" src="" data-image-width="1080" data-image-height="1080">
-                    <div class="u-container-layout u-valign-middle u-container-layout-1"></div>
+                    <div class="u-container-layout u-valign-middle u-container-layout-1" ></div>
                   </div>
                   <div class="u-align-left u-container-style u-layout-cell u-right-cell u-size-30 u-layout-cell-2">
                     <div class="u-container-layout u-container-layout-2">
-                      <h2 class="u-text u-text-1">НОВОСТИ</h2>
-                      <p class="u-text u-text-2">Первая новость<br>Вторая новость&nbsp;<br>Третья новость<br>Четвертая новость<br>Пятая новость
-                      </p>
+					
+
+
+
+
+
+                      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+
+<script>
+
+    $(function() {
+
+
+   var news = [];
+
+   $.getJSON('news.json', function(data) {
+       $.each(data.records, function(i, f) {
+          var tblRow = "<tr>" + "<td>" + f.NEWS + "</td>" + "</tr>"
+           $(tblRow).appendTo("#userdata tbody");
+     });
+
+   });
+
+});
+</script>
+</head>
+
+<body>
+
+<div class="wrapper">
+<div class="profile">
+   <table style="width:100%" id= "userdata" border="2">
+  <thead>
+            <th  align="center">Новости</th>
+			
+        </thead>
+      <tbody>
+
+       </tbody>
+   </table>
+
+</div>
+</div>
                     </div>
                   </div>
                 </div>
@@ -189,8 +317,41 @@
                 <div class="u-layout-row">
                   <div class="u-align-left u-container-style u-layout-cell u-left-cell u-size-30 u-layout-cell-3">
                     <div class="u-container-layout u-container-layout-3">
-                      <h2 class="u-text u-text-3">Частые вопросы</h2>
-                      <p class="u-text u-text-4">Первый вопрос<br>Второй вопрос<br>Третий вопрос<br>Четвертый вопрос<br>Пятый вопрос
+                      <script>
+
+    $(function() {
+
+
+   var qa = [];
+
+   $.getJSON('qa.json', function(data) {
+       $.each(data.records, function(i, f) {
+          var tblRow = "<tr>" + "<td>" + f.QA + "</td>" + "</tr>"
+           $(tblRow).appendTo("#userdata tfoot");
+     });
+
+   });
+
+});
+</script>
+</head>
+
+<body>
+
+<div class="wrapper">
+<div class="profile">
+   <table style= "width:100%" id= "userdata" border="2">
+  <thead>
+            <th  align="center">Часто задаваемые вопросы</th>
+			
+        </thead>
+      <tfoot>
+
+       </tfoot>
+   </table>
+
+</div>
+</div>
                       </p>
                     </div>
                   </div>
@@ -217,7 +378,7 @@
 	  <div class="u-container-style u-dialog u-grey-5 u-radius-30 u-shape-round u-dialog-1">
         <div class="u-container-layout u-valign-bottom u-container-layout-1">
           <h2 class="u-align-center u-text u-text-default u-text-1"> ПОЗВОНИТЕ НАМ ИЛИ ОСТАВЬТЕ СВОЙ&nbsp;НОМЕР ТЕЛЕФОНА</h2>
-          <a href="https://nicepage.com/joomla-templates" class="u-active-none u-btn u-button-style u-hover-none u-none u-text-hover-palette-1-base u-btn-1"><span class="u-icon u-text-palette-1-base"><svg class="u-svg-content" viewBox="0 0 405.333 405.333" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M373.333,266.88c-25.003,0-49.493-3.904-72.704-11.563c-11.328-3.904-24.192-0.896-31.637,6.699l-46.016,34.752    c-52.8-28.181-86.592-61.952-114.389-114.368l33.813-44.928c8.512-8.512,11.563-20.971,7.915-32.64    C142.592,81.472,138.667,56.96,138.667,32c0-17.643-14.357-32-32-32H32C14.357,0,0,14.357,0,32    c0,205.845,167.488,373.333,373.333,373.333c17.643,0,32-14.357,32-32V298.88C405.333,281.237,390.976,266.88,373.333,266.88z"></path></svg><img></span>&nbsp;Пример&nbsp; +7 (666) 228-13-37
+          <a href="" class="u-active-none u-btn u-button-style u-hover-none u-none u-text-hover-palette-1-base u-btn-1"><span class="u-icon u-text-palette-1-base"><svg class="u-svg-content" viewBox="0 0 405.333 405.333" x="0px" y="0px" style="width: 1em; height: 1em;"><path d="M373.333,266.88c-25.003,0-49.493-3.904-72.704-11.563c-11.328-3.904-24.192-0.896-31.637,6.699l-46.016,34.752    c-52.8-28.181-86.592-61.952-114.389-114.368l33.813-44.928c8.512-8.512,11.563-20.971,7.915-32.64    C142.592,81.472,138.667,56.96,138.667,32c0-17.643-14.357-32-32-32H32C14.357,0,0,14.357,0,32    c0,205.845,167.488,373.333,373.333,373.333c17.643,0,32-14.357,32-32V298.88C405.333,281.237,390.976,266.88,373.333,266.88z"></path></svg><img></span>&nbsp;Пример&nbsp; +7 (666) 228-13-37
           </a>
 		  
 			<form method="POST">

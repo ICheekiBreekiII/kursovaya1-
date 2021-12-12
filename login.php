@@ -20,7 +20,7 @@ require 'db.php';
 					}
 				} else
 				{
-					$errors[] = 'Пользователь не найден';
+					$errors[] = '<div style="color:red;">Пользователь не найден</div>';
 				}
 				if( ! empty($errors) )
 				{
