@@ -20,5 +20,5 @@
 
 
 ### Пример ответа
-`{"records":[{"POSITION":"Терапевт","NAME":"Иван","SURNAME":"Иванов","MIDDLENAME":"Иванович", "ROOMNUM":"302"},{"POSITION":"Терапевт","NAME":"Иван","SURNAME":"Иванов","MIDDLENAME":"Иванович", "ROOMNUM":"302"}}`
+`{"records":[{"POSITION":"Терапевт","NAME":"Иван","SURNAME":"Иванов","MIDDLENAME":"Иванович", "ROOMNUM":"302"},{"POSITION":"Педиатр","NAME":"Анна","SURNAME":"Леонова","MIDDLENAME":"Александрова", "ROOMNUM":"101"}}`
 
