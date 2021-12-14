@@ -16,7 +16,7 @@
 |NAME|varchar(20)|Имя врача|
 |SURNAME|varchar(20)|Фамилия врача|
 |MIDDLENAME|varchar(20)|Отчество|
-|ROOMNUM|INT|Номер кабинета|
+|ROOMNUM|integer|Номер кабинета|
 
 
 ### Пример ответа
