@@ -15,12 +15,10 @@ $doctors = new Doctors($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
-//$doctors->id = $data->id;
 
 $doctors->POSITION = $data->POSITION;
 $doctors->NAME = $data->NAME;
 $doctors->SURNAME = $data->SURNAME;
-//$doctors->BIRTHDAY = $data->BIRTHDAY;
 $doctors->MIDDLENAME = $data->MIDDLENAME;
 $doctors->ROOMNUM = $data->ROOMNUM;
 $doctors->SALARY = $data->SALARY;

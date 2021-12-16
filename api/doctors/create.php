@@ -19,7 +19,6 @@ if (!empty($data->POSITION) && !empty($data->NAME) && !empty($data->SURNAME) && 
 	$doctors->POSITION = $data->POSITION;
 	$doctors->NAME = $data->NAME;
 	$doctors->SURNAME = $data->SURNAME;
-	//$doctors->BIRTHDAY = $data->BIRTHDAY;
 	$doctors->MIDDLENAME = $data->MIDDLENAME;
 	$doctors->ROOMNUM = $data->ROOMNUM;
 	$doctors->SALARY = $data->SALARY;

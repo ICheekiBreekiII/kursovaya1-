@@ -3,7 +3,7 @@
 class News{
 	
 	private  $conn;
-	private  $table_NAME = "news1";
+	private  $table_NAME = "news";
 	
 	public $id;
 	public $NEWS;

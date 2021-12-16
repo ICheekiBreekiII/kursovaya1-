@@ -34,7 +34,6 @@ if ($num > 0) {
 	
 	http_response_code(200);
 	
-	//echo json_encode($Doctors_arr);
 	$json_data = json_encode($Doctors_arr);
 	file_put_contents('doctors.json', $json_data);
 }

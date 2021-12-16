@@ -8,7 +8,7 @@
 					$errors = array();
 					if( trim($data['number']) == '' )
 					{
-						$errors[] = 'Введите логин!'; 
+						$errors[] = 'Введите номер!'; 
 					}
 
 					if(R::count('phones', "number = ?", array($data['number'])) > 0 )
@@ -180,7 +180,7 @@
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="api/doctors/read.php" target="_blank" style="padding: 10px 16px;">Врачи</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="1.html" style="padding: 10px 16px;">Контакты</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="1.html" style="padding: 10px 16px;">Рабочие дни</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="login.php" style="padding: 10px 26px 10px 16px;">Специалистам</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="login.php" style="padding: 10px 26px 10px 16px;">Админам</a>
 </li></ul>
           </div>
           <div class="u-custom-menu u-nav-container-collapse">
@@ -192,7 +192,7 @@
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="api/doctors/read.php" target="_blank" style="padding: 10px 24px;">Врачи</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" style="padding: 10px 24px;">Контакты</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" style="padding: 10px 24px;">Рабочие дни</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="login.php" style="padding: 10px 24px;">Специалистам</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="login.php" style="padding: 10px 24px;">Админам</a>
 </li></ul>
               </div>
             </div>
@@ -297,9 +297,9 @@
 
 <div class="wrapper">
 <div class="profile">
-   <table style="width:100%" id= "userdata" border="2">
+   <table style="width:100%" id= "userdata" border="0" >
   <thead>
-            <th  align="center">Новости</th>
+            <th  align="Left"><big><big><big>Новости</big></big></big></th>
 			
         </thead>
       <tbody>
@@ -340,9 +340,9 @@
 
 <div class="wrapper">
 <div class="profile">
-   <table style= "width:100%" id= "userdata" border="2">
+   <table style= "width:100%" id= "userdata" border="0">
   <thead>
-            <th  align="center">Часто задаваемые вопросы</th>
+            <th  align="left"><big><big><big>Часто задаваемые вопросы</big></big></big></th>
 			
         </thead>
       <tfoot>
@@ -369,7 +369,7 @@
     
     
     <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-ce7f"><div class="u-align-left u-clearfix u-sheet u-sheet-1">
-        <a href="https://github.com/parapitek" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-radius-0 u-btn-1">Разработчик<br>
+        <a href="https://github.com/ICheekiBreekiII" class="u-active-none u-border-2 u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-radius-0 u-btn-1">Разработчик<br>
         </a>
       </div></footer>
 
